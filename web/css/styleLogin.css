@@ -1,0 +1,27 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    
+  }
+  
+  .hero-image {
+    background-image: url("images/fptHcm.png");
+    background-color: #cccccc;
+    height: 740px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    width: 100%;
+  }
+  
+  .hero-text {
+    text-align: center;
+    margin-top:60%;
+    
+  }
+  .hero-text >a {
+      text-decoration: none;
+      color: white;
+  }

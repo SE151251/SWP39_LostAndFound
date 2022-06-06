@@ -29,7 +29,7 @@
             <table>
                 <tr>
                             <td>Content</td>
-                            <td>: <input type="text" name="txtContent" value="${content}"<font color="red">${contentError}</font></td>
+                            <td>: <input type="description" name="txtContent" value="${content}"<font color="red">${contentError}</font></td>
 			</tr>      
                     
                 <tr>

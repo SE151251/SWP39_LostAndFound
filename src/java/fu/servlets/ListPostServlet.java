@@ -32,8 +32,14 @@ public class ListPostServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
                 ArticleDAO adao = new ArticleDAO();
-                List<Article> listArts = adao.getAllArticles();
-                request.setAttribute("articles", listArts); 
+                List<Article> listArtsFind = adao.getAllArticlesFind();
+                request.setAttribute("articlesFind", listArtsFind); 
+                List<Article> listArtsReturn = adao.getAllArticlesReturn();
+                request.setAttribute("articlesReturn", listArtsReturn); 
+                List<Article> listArtsShare = adao.getAllArticlesShare();
+                request.setAttribute("articlesShare", listArtsShare); 
+                List<Article> listArtsNotice = adao.getAllArticlesNotice();
+                request.setAttribute("articlesNotice", listArtsNotice); 
         }catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -79,7 +79,7 @@ public class UpdateServlet extends HttpServlet {
                     url = INVALID;
                     request.setAttribute("contentError", contentError);
                     request.setAttribute("errorURL", errorURL);
-                    request.setAttribute("postContent", content);
+                    request.setAttribute("content", content);
                     request.setAttribute("postURL", textURL);
                     request.setAttribute("itemId", Integer.parseInt(itemId));
                     request.setAttribute("postTypeId", Integer.parseInt(postTypeId));

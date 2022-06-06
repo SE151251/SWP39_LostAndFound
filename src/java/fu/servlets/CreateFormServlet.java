@@ -52,7 +52,7 @@ public class CreateFormServlet extends HttpServlet {
                 request.setAttribute("postURL", request.getAttribute("postURL"));
                 request.setAttribute("itemId", request.getAttribute("itemId"));
                 request.setAttribute("postTypeId", request.getAttribute("postTypeId"));
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                request.getRequestDispatcher("form.jsp").forward(request, response);
 
             } else {
                 request.setAttribute("errormessage", "Please login!");
