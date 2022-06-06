@@ -54,9 +54,9 @@
         <nav class="navbar navbar-dark fixed-top">
             <div class="navbar">
                 <button class="rounded-circle" type="button" data-toggle="collapse" data-target="#Navbar">
-                    <img class="rounded-circle" src="img/logo.jpg" height="30" width="100%">
+                    <img class="rounded-circle" src="${userdata.picture}" height="30" width="100%">
                 </button>
-                <span class="Nav-username"><c:out value="${userdata.memberName}"/></span>
+                <span class="Nav-username" style="width: 300px;"><c:out value="${userdata.memberName}"/></span>
             </div>
             <div class="search col-md-4">
                 <div class="search-field">
@@ -118,7 +118,7 @@
     </div>
     <!-- tab content -->
     <div class="tab-content ">
-        <a type="button" href="createPost.html" class="center createPost--btn btn rounded-circle">+</a>
+        <a type="button" href="CreateFormServlet" class="center createPost--btn btn rounded-circle">+</a>
         <div class="row tab-pane active">
             <c:forEach var="dt" items="${articlesFind}" >
             <div class="pane col-md-3">

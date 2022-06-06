@@ -6,8 +6,8 @@ body {
   }
   
   .hero-image {
-    background-image: url("images/fptHcm.png");
-    background-color: #cccccc;
+    background-image: url(../images/fptHcm.png);
+    background-color: #cccccc; 
     height: 740px;
     background-position: center;
     background-repeat: no-repeat;
