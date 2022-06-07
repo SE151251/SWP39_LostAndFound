@@ -54,7 +54,9 @@ public class ArticleDAO {
         try {
             con = DBUtils.makeConnection();
             if (con != null) {
-                String sql = "Select * From Article Order By PostTime DESC";
+                String sql = "Select * From Article "
+                        + "Where ArticleStatus = 1 "
+                        + "Order By PostTime DESC";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -162,8 +164,9 @@ public class ArticleDAO {
         try {
             con = DBUtils.makeConnection();
             if (con != null) {
-                String sql = "DELETE FROM Article "
-                        + "WHERE ArticleID LIKE ? ";
+                String sql = "UPDATE Article "
+                        + "SET ArticleStatus = -1 "
+                        + "Where ArticleID = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, aId);
                 int row = stm.executeUpdate();
@@ -192,7 +195,7 @@ public class ArticleDAO {
             if (con != null) {
                 String sql = "select A.ArticleID, A.ArticleContent, A.ImgURL, A.PostTime, A.ArticleStatus, A.MemberID, A.ArticleTypeID, A.ItemID \n" +
                             "from Article A inner join ArticleType AType on A.ArticleTypeID = AType.ArticleTypeID\n" +
-                            "Where A.ArticleTypeID = 1  Order By PostTime DESC";
+                            "Where A.ArticleTypeID = 1 and ArticleStatus = 1  Order By PostTime DESC";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -238,7 +241,7 @@ public class ArticleDAO {
             if (con != null) {
                 String sql = "select A.ArticleID, A.ArticleContent, A.ImgURL, A.PostTime, A.ArticleStatus, A.MemberID, A.ArticleTypeID, A.ItemID \n" +
                             "from Article A inner join ArticleType AType on A.ArticleTypeID = AType.ArticleTypeID\n" +
-                            "Where A.ArticleTypeID = 2  Order By PostTime DESC";
+                            "Where A.ArticleTypeID = 2 and ArticleStatus = 1  Order By PostTime DESC";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -285,7 +288,7 @@ public class ArticleDAO {
             if (con != null) {
                 String sql = "select A.ArticleID, A.ArticleContent, A.ImgURL, A.PostTime, A.ArticleStatus, A.MemberID, A.ArticleTypeID, A.ItemID \n" +
                             "from Article A inner join ArticleType AType on A.ArticleTypeID = AType.ArticleTypeID\n" +
-                            "Where A.ArticleTypeID = 3  Order By PostTime DESC";
+                            "Where A.ArticleTypeID = 3 and ArticleStatus = 1 Order By PostTime DESC";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -332,7 +335,7 @@ public class ArticleDAO {
             if (con != null) {
                 String sql = "select A.ArticleID, A.ArticleContent, A.ImgURL, A.PostTime, A.ArticleStatus, A.MemberID, A.ArticleTypeID, A.ItemID \n" +
                             "from Article A inner join ArticleType AType on A.ArticleTypeID = AType.ArticleTypeID\n" +
-                            "Where A.ArticleTypeID = 4  Order By PostTime DESC";
+                            "Where A.ArticleTypeID = 4 and ArticleStatus = 1 Order By PostTime DESC";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -379,7 +382,7 @@ public class ArticleDAO {
             if (con != null) {
                 String sql = "select A.ArticleID, A.ArticleContent, A.ImgURL, A.PostTime, A.ArticleStatus, A.ArticleTypeID, A.ItemID \n" +
                             "from Article A inner join Member M on M.MemberID = A.MemberID\n" +
-                            "Where M.MemberID Like ?";
+                            "Where A.ArticleStatus = 1 and M.MemberID Like ?";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {

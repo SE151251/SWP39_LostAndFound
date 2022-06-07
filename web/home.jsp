@@ -128,8 +128,8 @@
                 <div class="pane-content">
                     <p>Time: <c:out value="${dt.postTime}"/></p>
                     <p>Item type: <c:out value="${dt.item.itemName}"/></p>
-                    <p>ArticleType: <c:out value="${dt.type.typeName}"/></p>
-                    <a href="UpdateFormServlet?aId=${dt.articleID}">Update</a>
+                    <p>ArticleType: <c:out value="${dt.type.typeName}"/></p>                   
+                        <a href="ViewDetailServlet?aId=${dt.articleID}">View more >></a>                   
                     <font-awesome-icon icon="fa-solid fa-phone" />
 
                 </div>

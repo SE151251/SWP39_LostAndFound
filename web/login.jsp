@@ -42,13 +42,14 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">            
                     <div class="hero-text">
-                      <h3 style="color: rgb(255, 21, 0)"> FPT Lost and Found</h3>
-                      <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile&redirect_uri=http://localhost:8080/SWP39_LostAndFound/login-google&response_type=code
+                      <h3 style="color: #FF3300; font-size: 40px; font-weight: bold"> FPT Lost and Found</h3>
+                      <a style="font-size: 30px; font-weight: 500" href="https://accounts.google.com/o/oauth2/auth?scope=email profile&redirect_uri=http://localhost:8080/SWP39_LostAndFound/login-google&response_type=code
     &client_id=287706363103-nelsjcm2sdr3ruldha94fink89tk87tg.apps.googleusercontent.com&approval_prompt=force">Login with google</a><br>
-                      <span> <i class="fa-brands fa-google"></i></span>                   
+                      <span> <i class="fa-brands fa-google"></i></span>
+                      <br/><font style="font-size: 20px" color="red" ><c:out value="${errormessage}"/> </font>
                     </div>    
             </div>
-            <div class="col-md-4"><font color="red" ><c:out value="${errormessage}"/> </font></div>
+            <div class="col-md-4"></div>
         </div>
     </div>
     </body>
