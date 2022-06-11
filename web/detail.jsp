@@ -107,7 +107,7 @@
                 </div>
                 <div><img src="images/report.png" alt="">Report</div>
                 <c:if test="${userdata.memberID eq postDetail.member.memberID}">
-                <div><a href="UpdateFormServlet?aId=${postDetail.articleID}">Update</a></div>
+                <div><a href="UpdateFormServlet?aId=${postDetail.articleID}">UPDATE</a></div>
                 <div><a href="DeleteServlet?aId=${postDetail.articleID}" onclick="return confirm('Are you sure?')">REMOVE</a>  </div>
                 </c:if>
                 </div>
@@ -134,7 +134,9 @@
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
+                
+               
         <script src="js/function.js"></script>
 
 </body>

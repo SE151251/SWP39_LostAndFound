@@ -17,7 +17,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import javax.servlet.annotation.MultipartConfig;
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -48,6 +47,8 @@ public class CreateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = ERROR;
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try {
             HttpSession session = request.getSession(false);
             if (session == null) {
@@ -137,7 +138,7 @@ public class CreateServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            System.out.println(url);
+            //System.out.println(url);
             request.getRequestDispatcher(url).forward(request, response);
         }
 

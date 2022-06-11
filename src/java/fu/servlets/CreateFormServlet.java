@@ -11,7 +11,6 @@ import fu.entities.ArticleType;
 import fu.entities.Item;
 import fu.entities.Member;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

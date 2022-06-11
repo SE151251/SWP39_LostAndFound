@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%-- <!DOCTYPE html>
 <html>
     <head>
@@ -58,30 +59,18 @@
                 </button>
                 <span class="Nav-username" style="width: 300px;"><c:out value="${userdata.memberName}"/></span>
             </div>
+            
             <div class="search col-md-4">
+               <form> 
                 <div class="search-field">
                     <div class="search-icon"></div>
-                    <input type="text" class="search-input" placeholder="Search">
+                    <input type="text" name="keySearch" class="search-input" placeholder="Search">
                 </div>
-
-                <div class="dropdown">
-                    <div class="dropdown-select">
-                        <span class="dropdown-value">Search by</span>
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 10px" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </span>
-                    </div>
-                    <div class="dropdown-list">
-                        <div class="dropdown-item">Name</div>
-                        <div class="dropdown-item">Categories</div>
-                    </div>
-                </div>
-                <button class="search-button">Search</button>
+        <button formaction="SearchServlet" class="search-button">Search</button>
+         </form>
             </div>
+                
+                
 
         </nav>
         <div class="collapse navbar-collapse" id="Navbar">
@@ -105,6 +94,24 @@
     </header>
 
     <div class="tabs">
+        <div style="width: 45px;" class="dropdown filter">
+
+            <div style="width: 42px; padding: 0;" class="dropdown-select">
+                <span class="dropdown-value filter-btn btn"><i class=" fa-solid fa-filter"></i></span>
+            </div>
+            <div style=" min-width: 170px; max-width: 200px;" class="dropdown-list filter-list mt-3">
+                <form action="SearchServlet">
+                <select name="txtItem" >
+                             <c:forEach var="dt" items="${ListItemType}" >                                  
+                                <option <c:if test="${ dt.itemID eq itemId}">selected </c:if>
+                                value="${dt.itemID}"><c:out value="${dt.itemName}"/></option>
+                             </c:forEach>
+                         </select>
+                    <br/>
+                    <input type="submit" value="Search" />
+                    </form>
+            </div>
+        </div>
         <div class="tab-item active">
             Cần Tìm
         </div>
@@ -121,14 +128,14 @@
         <a type="button" href="CreateFormServlet" class="center createPost--btn btn rounded-circle">+</a>
         <div class="row tab-pane active">
             <c:forEach var="dt" items="${articlesFind}" >
-            <div class="pane col-md-3">
+            <div class="pane col-md-2">
                 <div class="pane-img">
                     <img src="images/${dt.imgUrl}" alt="">
                 </div>
                 <div class="pane-content">
-                    <p>Time: <c:out value="${dt.postTime}"/></p>
-                    <p>Item type: <c:out value="${dt.item.itemName}"/></p>
-                    <p>ArticleType: <c:out value="${dt.type.typeName}"/></p>                   
+                    <p style="font-size: 12px">Thời gian:<c:out value="${dt.postTime}"/></p>                 
+                   
+                    <a href="SearchServlet?txtItem=${dt.item.itemID}">    <p><span style="padding: 5px 10px 5px 10px" class="badge badge-pill badge-primary"><c:out value="${dt.item.itemName}"/></span></p>   </a>                                 
                         <a href="ViewDetailServlet?aId=${dt.articleID}">View more >></a>                   
                     <font-awesome-icon icon="fa-solid fa-phone" />
 
@@ -138,34 +145,37 @@
         </div>
         <div class="row tab-pane ">
             <c:forEach var="dt" items="${articlesReturn}" >
-            <div class="pane col-md-3">
+            <div class="pane col-md-2">
                 <div class="pane-img">
                     <img src="images/${dt.imgUrl}" alt="">
                 </div>
                 <div class="pane-content">
-                    <p>Time: <c:out value="${dt.postTime}"/></p>
-                    <p>Item type: <c:out value="${dt.item.itemName}"/></p>
-                    <p>ArticleType: <c:out value="${dt.type.typeName}"/></p>
-                    <a href="UpdateFormServlet?aId=${dt.articleID}">Update</a>
+                    <p style="font-size: 12px">Thời gian: <c:out value="${dt.postTime}"/></p>
+                    
+                    <a href="SearchServlet?txtItem=${dt.item.itemID}">    <p><span style="padding: 5px 10px 5px 10px" class="badge badge-pill badge-primary"><c:out value="${dt.item.itemName}"/></span></p>   </a>                                        
+                     <a href="ViewDetailServlet?aId=${dt.articleID}">View more >></a> 
                     <font-awesome-icon icon="fa-solid fa-phone" />
 
                 </div>
             </div>
             </c:forEach>
-            
-            
+                       
         </div>
         <div class="row tab-pane ">
             <c:forEach var="dt" items="${articlesShare}" >
-            <div class="pane col-md-3">
+            <div class="pane col-md-2">
                 <div class="pane-img">
+                    <c:if test="${not empty dt.imgUrl}">
                     <img src="images/${dt.imgUrl}" alt="">
+                    </c:if>
+                    <c:if test="${empty dt.imgUrl}">
+                        <p>null picture</p>
+                    </c:if>
                 </div>
                 <div class="pane-content">
-                    <p>Time: <c:out value="${dt.postTime}"/></p>
-                    <p>Item type: <c:out value="${dt.item.itemName}"/></p>
-                    <p>ArticleType: <c:out value="${dt.type.typeName}"/></p>
-                    <a href="UpdateFormServlet?aId=${dt.articleID}">Update</a>
+                    <p style="font-size: 12px">Thời gian: <c:out value="${dt.postTime}"/></p>
+                                                                            
+                     <a href="ViewDetailServlet?aId=${dt.articleID}">View more >></a> 
                     <font-awesome-icon icon="fa-solid fa-phone" />
 
                 </div>

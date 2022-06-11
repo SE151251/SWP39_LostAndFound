@@ -45,7 +45,7 @@ public class LoginGoogleServlet extends HttpServlet {
             String code = request.getParameter("code");
             if (code == null || code.isEmpty()) {               
                uri=LOGIN_PAGE;
-               request.setAttribute("errormessage", "Something error here!");
+               request.setAttribute("errormessage", "Please login!");
             } else {
                 String accessToken = GoogleUtils.getToken(code);               
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);

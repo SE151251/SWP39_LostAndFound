@@ -6,7 +6,9 @@
 package fu.servlets;
 
 import fu.daos.ArticleDAO;
+import fu.daos.ItemTypeDAO;
 import fu.entities.Article;
+import fu.entities.Item;
 import fu.entities.Member;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,6 +42,9 @@ public class ListPostServlet extends HttpServlet {
                 request.setAttribute("articlesShare", listArtsShare); 
                 List<Article> listArtsNotice = adao.getAllArticlesNotice();
                 request.setAttribute("articlesNotice", listArtsNotice); 
+                ItemTypeDAO itDao = new ItemTypeDAO();
+                List<Item> listI = itDao.getAllItems();
+                request.setAttribute("ListItemType", listI);
         }catch (Exception e) {
             e.printStackTrace();
         } finally {

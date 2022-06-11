@@ -13,7 +13,6 @@ import fu.entities.ArticleType;
 import fu.entities.Item;
 import fu.entities.Member;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +34,8 @@ public class UpdateServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         String url = ERROR;
         try {
             HttpSession session = request.getSession(false);

@@ -97,7 +97,7 @@ public class ArticleDAO {
         PreparedStatement preStm = null;
         ResultSet rs = null;
         boolean check = false;
-        String sql = ("UPDATE Article SET ArticleContent=?, PostTime=?, ArticleTypeID=?, ItemID=? Where ArticleID=?");
+        String sql = ("UPDATE Article SET ArticleContent = ?, PostTime=?, ArticleTypeID=?, ItemID=? Where ArticleID=?");
         try {
             conn = DBUtils.makeConnection();
             if (conn != null) {
@@ -384,6 +384,7 @@ public class ArticleDAO {
                             "from Article A inner join Member M on M.MemberID = A.MemberID\n" +
                             "Where A.ArticleStatus = 1 and M.MemberID Like ?";
                 stm = con.prepareStatement(sql);
+                stm.setString(1,m.getMemberID());
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     String articleId = rs.getString("ArticleID");
@@ -397,6 +398,194 @@ public class ArticleDAO {
                     Item i = idao.getItemByID(itemId);
                     ArticleTypeDAO adao = new ArticleTypeDAO();
                     ArticleType a = adao.getArticleTypeByID(articleTypeId);
+                    Article art = new Article(articleId, articleContent, articleURL, articleTime, articleStatus, i, m, a);
+                    lb.add(art);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return lb;
+    }
+    // Lấy tất cả các bài loại "Tìm đồ" và loại đồ vật theo yêu cầu
+    public ArrayList<Article> getAllArticlesFindByItemType(Item i) throws ClassNotFoundException, SQLException, Exception {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Article> lb = new ArrayList<>();
+        try {
+            con = DBUtils.makeConnection();
+            if (con != null) {
+                String sql = "select A.ArticleID, A.ArticleContent, A.ImgURL, A.PostTime, A.ArticleStatus, A.MemberID, A.ArticleTypeID, A.ItemID \n" +
+                            "from Article A inner join ArticleType AType on A.ArticleTypeID = AType.ArticleTypeID\n" +
+                            "				inner join ItemType I on I.ItemID = A.ItemID\n" +
+                            "Where A.ArticleTypeID = 1 and A.ItemID = ?\n" +
+                            "Order By PostTime DESC";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, i.getItemID());
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String articleId = rs.getString("ArticleID");
+                    String articleContent = rs.getString("ArticleContent");
+                    String articleURL = rs.getString("ImgURL");
+                    String articleTime = rs.getString("PostTime");                    
+                    int articleStatus = rs.getInt("ArticleStatus");
+                    String memberId = rs.getString("MemberID");
+                    int articleTypeId = rs.getInt("ArticleTypeID");
+                    MemberDAO mdao = new MemberDAO();
+                    Member m = mdao.find(memberId);
+                    ArticleTypeDAO adao = new ArticleTypeDAO();
+                    ArticleType a = adao.getArticleTypeByID(articleTypeId);
+                    Article art = new Article(articleId, articleContent, articleURL, articleTime, articleStatus, i, m, a);
+                    lb.add(art);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return lb;
+    }
+    // Lấy tất cả các bài loại "Trả đồ" và loại đồ vật theo yêu cầu
+    public ArrayList<Article> getAllArticlesReturnByItemType(Item i) throws ClassNotFoundException, SQLException, Exception {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Article> lb = new ArrayList<>();
+        try {
+            con = DBUtils.makeConnection();
+            if (con != null) {
+                String sql = "select A.ArticleID, A.ArticleContent, A.ImgURL, A.PostTime, A.ArticleStatus, A.MemberID, A.ArticleTypeID, A.ItemID \n" +
+                            "from Article A inner join ArticleType AType on A.ArticleTypeID = AType.ArticleTypeID\n" +
+                            "				inner join ItemType I on I.ItemID = A.ItemID\n" +
+                            "Where A.ArticleTypeID = 2 and A.ItemID = ?\n" +
+                            "Order By PostTime DESC";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, i.getItemID());
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String articleId = rs.getString("ArticleID");
+                    String articleContent = rs.getString("ArticleContent");
+                    String articleURL = rs.getString("ImgURL");
+                    String articleTime = rs.getString("PostTime");                    
+                    int articleStatus = rs.getInt("ArticleStatus");
+                    String memberId = rs.getString("MemberID");
+                    int articleTypeId = rs.getInt("ArticleTypeID");
+                    MemberDAO mdao = new MemberDAO();
+                    Member m = mdao.find(memberId);
+                    ArticleTypeDAO adao = new ArticleTypeDAO();
+                    ArticleType a = adao.getArticleTypeByID(articleTypeId);
+                    Article art = new Article(articleId, articleContent, articleURL, articleTime, articleStatus, i, m, a);
+                    lb.add(art);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return lb;
+    }
+    // Search tất cả các bài loại "Tìm đồ" theo từ khóa
+    public ArrayList<Article> searchAllArticlesFindByName(String key) throws ClassNotFoundException, SQLException, Exception {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Article> lb = new ArrayList<>();
+        try {
+            con = DBUtils.makeConnection();
+            if (con != null) {
+                String sql = "select A.ArticleID, A.ArticleContent, A.ImgURL, A.PostTime, A.ArticleStatus, A.MemberID, A.ArticleTypeID, A.ItemID \n" +
+                            "from Article A inner join ArticleType AType on A.ArticleTypeID = AType.ArticleTypeID\n" +                          
+                            "Where A.ArticleTypeID = 1 and A.ArticleContent Like ?\n" +
+                            "Order By PostTime DESC";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%"+key+"%");
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String articleId = rs.getString("ArticleID");
+                    String articleContent = rs.getString("ArticleContent");
+                    String articleURL = rs.getString("ImgURL");
+                    String articleTime = rs.getString("PostTime");                    
+                    int articleStatus = rs.getInt("ArticleStatus");
+                    String memberId = rs.getString("MemberID");
+                    int articleTypeId = rs.getInt("ArticleTypeID");
+                    int itemId = rs.getInt("ItemID");
+                    MemberDAO mdao = new MemberDAO();
+                    Member m = mdao.find(memberId);
+                    ItemTypeDAO idao = new ItemTypeDAO();
+                    Item i = idao.getItemByID(itemId);
+                    ArticleTypeDAO adao = new ArticleTypeDAO();
+                    ArticleType a = adao.getArticleTypeByID(articleTypeId);
+                    Article art = new Article(articleId, articleContent, articleURL, articleTime, articleStatus, i, m, a);
+                    lb.add(art);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return lb;
+    }
+    // Search tất cả các bài loại "Trả đồ" theo từ khóa
+    public ArrayList<Article> searchAllArticlesReturnByName(String key) throws ClassNotFoundException, SQLException, Exception {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Article> lb = new ArrayList<>();
+        try {
+            con = DBUtils.makeConnection();
+            if (con != null) {
+                String sql = "select A.ArticleID, A.ArticleContent, A.ImgURL, A.PostTime, A.ArticleStatus, A.MemberID, A.ArticleTypeID, A.ItemID \n" +
+                            "from Article A inner join ArticleType AType on A.ArticleTypeID = AType.ArticleTypeID\n" +                          
+                            "Where A.ArticleTypeID = 2 and A.ArticleContent Like ?\n" +
+                            "Order By PostTime DESC";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%"+key+"%");
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String articleId = rs.getString("ArticleID");
+                    String articleContent = rs.getString("ArticleContent");
+                    String articleURL = rs.getString("ImgURL");
+                    String articleTime = rs.getString("PostTime");                    
+                    int articleStatus = rs.getInt("ArticleStatus");
+                    String memberId = rs.getString("MemberID");
+                    int articleTypeId = rs.getInt("ArticleTypeID");
+                    int itemId = rs.getInt("ItemID");
+                    MemberDAO mdao = new MemberDAO();
+                    Member m = mdao.find(memberId);
+                    ArticleTypeDAO adao = new ArticleTypeDAO();
+                    ArticleType a = adao.getArticleTypeByID(articleTypeId);
+                    ItemTypeDAO idao = new ItemTypeDAO();
+                    Item i = idao.getItemByID(itemId);
                     Article art = new Article(articleId, articleContent, articleURL, articleTime, articleStatus, i, m, a);
                     lb.add(art);
                 }
